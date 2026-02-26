@@ -3,6 +3,8 @@ import PrivateRoutes from "../routes/PrivateRoutes";
 import PublicLayout from "../layout/PublicLayout";
 import LandingPage from "../features/landing";
 import Login from "../features/auth/pages/Login";
+import Error from "../features/error";
+import SignUp from "../features/auth/pages/SignUp";
 
 function App() {
   return (
@@ -12,7 +14,9 @@ function App() {
       {/* PUBLIC ROUTES */}
       <Route element={<PublicLayout />}>
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/" element={<LandingPage />} />
+        <Route path="*" element={<Error />} />
       </Route>
 
       {/* ADMIN ROUTES */}

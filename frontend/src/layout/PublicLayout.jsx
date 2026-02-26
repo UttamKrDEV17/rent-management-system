@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom'
 
 const PublicLayout = () => {
   return (
-    <div>
+    <div className='w-screen overflow-hidden select-none'>
         <Outlet />
     </div>
   )

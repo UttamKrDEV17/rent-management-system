@@ -4,15 +4,19 @@
 @theme {
     --color-primary: #21c45d;
     --color-secondary: #e8f9ee;
-    --color-background: #ffffff;
+    --color-background: #f6f6f7;
     --color-text: #000000;
+    --color-navy: #0F172A;
 
     --font-primary: 'Inter', sans-serif;
     --font-secondary: 'Roboto', sans-serif;
 }
 
-body {
-    font-family: var(--font-primary);
-    background-color: var(--color-background);
-    color: var(--color-text);
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto;
 }
