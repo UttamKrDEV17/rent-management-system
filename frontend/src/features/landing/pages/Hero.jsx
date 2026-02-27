@@ -26,7 +26,7 @@ const Hero = () => {
 
       <div className="flex justify-center my-12">
         <Link
-          to="/signup"
+          to="/signup/owner"
           className="inline-flex items-center justify-center px-16 py-2 rounded-md bg-green-500 text-white text-xl font-bold gap-2"
         >
           Start Free trial

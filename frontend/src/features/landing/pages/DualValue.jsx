@@ -45,7 +45,7 @@ const DualValue = () => {
                 <CircleCheck className="text-primary" /> Vendor Management
               </li>
             </ul>
-            <Link className="flex items-center justify-center w-full py-3 rounded-lg border border-navy/20 font-bold text-navy hover:bg-navy hover:text-white transition-colors" to="owner">
+            <Link className="flex items-center justify-center w-full py-3 rounded-lg border border-navy/20 font-bold text-navy hover:bg-navy hover:text-white transition-colors" to="login?type=owner">
               Owner Login
             </Link>
           </div>
@@ -76,7 +76,7 @@ const DualValue = () => {
                 <CircleCheck className="text-primary" />  Digital Lease Access
               </li>
             </ul>
-            <Link to="tenants" className="flex items-center justify-center w-full py-3 rounded-lg border border-white/20 font-bold text-white hover:bg-white hover:text-navy transition-colors">
+            <Link to="/login?type=tenant" className="flex items-center justify-center w-full py-3 rounded-lg border border-white/20 font-bold text-white hover:bg-white hover:text-navy transition-colors">
                 Tenant Portal
             </Link>
           </div>

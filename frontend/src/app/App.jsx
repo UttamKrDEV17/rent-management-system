@@ -4,7 +4,8 @@ import PublicLayout from "../layout/PublicLayout";
 import LandingPage from "../features/landing";
 import Login from "../features/auth/pages/Login";
 import Error from "../features/error";
-import SignUp from "../features/auth/pages/SignUp";
+import OwnerSignup from "../features/auth/pages/OwnerSignup";
+import TenantSignUp from "../features/auth/pages/TenantSignUp";
 
 function App() {
   return (
@@ -13,9 +14,10 @@ function App() {
 
       {/* PUBLIC ROUTES */}
       <Route element={<PublicLayout />}>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
         <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup/owner" element={<OwnerSignup />} />
+        <Route path="/signup/tenant/:token" element={<TenantSignUp />} />
         <Route path="*" element={<Error />} />
       </Route>
 
