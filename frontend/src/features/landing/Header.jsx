@@ -1,7 +1,8 @@
 import React from 'react'
-import {Warehouse} from 'lucide-react'
+import { Warehouse} from 'lucide-react'
 import WhiteButton from '../../shared/components/WhiteButton'
 import GreenButton from '../../shared/components/GreenButton'
+import { Link, NavLink } from 'react-router-dom'
 
 const Header = () => {
   return (
@@ -11,18 +12,30 @@ const Header = () => {
           <div className="bg-secondary px-2 py-3 rounded-xl">
             <Warehouse className='text-primary' />
           </div>
-          <h1 className='font-bold text-2xl text-black'>
+          <Link to="/" className='font-bold text-2xl text-black'>
             Sangrah
-          </h1>
+          </Link>
         </div>
 
         <div className='font-medium text-gray-600 text-md'>
           <nav>
             <ul className='hidden md:flex gap-6'>
-              <li className='hover:text-primary'>Features</li>
-              <li className='hover:text-primary'>Pricing</li>
-              <li className='hover:text-primary'>Resources</li>
-              <li className='hover:text-primary'>About us</li>
+              {[
+        { label: 'Contact us', to: '/contact' },
+        { label: 'Pricing', to: '/pricing' },
+        { label: 'About us', to: '/about' },
+      ].map(({ label, to }) => (
+        <li key={to}>
+          <NavLink
+            to={to}
+            className={({ isActive }) =>
+              `transition-colors ${isActive ? 'text-primary font-semibold' : 'hover:text-primary'}`
+            }
+          >
+            {label}
+          </NavLink>
+        </li>
+      ))}
             </ul>
           </nav>
         </div>

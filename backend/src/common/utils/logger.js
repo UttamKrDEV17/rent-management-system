@@ -1,6 +1,6 @@
 import { createLogger, format, transports } from "winston";
 import DailyRotateFile from "winston-daily-rotate-file";
-import { asyncLocalStorage } from "../../middleware/requestContext.js";
+import { asyncLocalStorage } from "../../middlewares/requestContext.js";
 
 const injectRequestId = format((info) => {
   const store = asyncLocalStorage.getStore();

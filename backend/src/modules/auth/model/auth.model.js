@@ -22,7 +22,7 @@ const authSchema = new mongoose.Schema(
 
     role: {
       type: String,
-      enum: ['admin', 'homeowner', 'tenant'],
+      enum: ['admin', 'owner', 'tenant'],
       required: true,
       index: true,
     },

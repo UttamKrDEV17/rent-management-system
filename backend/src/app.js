@@ -1,10 +1,11 @@
+
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import logger from './common/utils/logger.js';
-import requestContext from './middleware/requestContext.js';
+import requestContext from './middlewares/requestContext.js';
 import errorHandler from './common/errors/errorHandler.js';
 import authRoutes from './modules/auth/routes/auth.route.js';
 
