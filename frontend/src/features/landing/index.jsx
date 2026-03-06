@@ -16,7 +16,9 @@ const LandingPage = () => {
   return (
     <div>
       <Header />
+      <div className='max-w-7xl mx-auto px-4'>
         <Outlet />
+      </div>
       <HomeFooter/>
       <MainFooter />
     </div>

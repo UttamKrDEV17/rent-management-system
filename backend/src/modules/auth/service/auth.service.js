@@ -7,6 +7,7 @@ import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '.
 import ms from 'ms';
 import RefreshToken from '../model/token.model.js';
 import { hash } from 'bcryptjs';
+import { id } from 'zod/locales';
 
 export const ownerRegister = async (data, userAgent, ipAddress) => {
     const existUser = await authRepo.findByEmail(data.email);
@@ -76,16 +77,14 @@ export const login = async (data,userAgent,ipAddress) => {
     if (!auth) {
         throw new AppError('User not found', 404, 'AUTH_NOT_FOUND');
     }
-
     const isPasswordValid = await authRepo.comparePassword(auth, data.password);
     if (!isPasswordValid) {
         throw new AppError('Invalid password', 401, 'AUTH_INVALID_PASSWORD');
     }
-
-    console.log(auth.role);
     const accessToken = generateAccessToken(auth._id, auth.role);
     const refreshToken = generateRefreshToken(auth._id);
     const refreshTokenHash = authRepo.hashedToken(refreshToken);
+    let userData;
         try{
             await authRepo.createRefreshToken({
                 user: auth._id,
@@ -94,13 +93,18 @@ export const login = async (data,userAgent,ipAddress) => {
                 userAgent: userAgent,
                 ipAddress: ipAddress,
             });
+
+            userData = await userService.findUserByAuthId(auth._id);
         }catch(err) {
             logger.error('Error creating refresh token', { error: err });
         }
 
-    
     return {
-        auth,
+        id: auth._id,
+        email: auth.email,
+        role: auth.role,
+        name: userData ? userData.name : null,
+        phone: userData ? userData.phone : null,
         accessToken: accessToken,
         refreshToken: refreshToken
     };
@@ -169,12 +173,41 @@ export const tokenAccessRefresh = async (refreshToken, userAgent, ipAddress) => 
         ipAddress: ipAddress,
         replacedByToken: storedToken._id,
     })
+    const userData = await userService.findUserByAuthId(auth._id);
+
 
     storedToken.replacedByToken = newStoredToken._id;
     await storedToken.save();
 
     return {
+        id: userData ? userData._id : null,
+        email: auth.email,
+        name: userData ? userData.name : null,
+        phone: userData ? userData.phone : null,
+        role: auth.role,
         accessToken: newAccessToken,
         refreshToken: newRefreshToken,
     }
 };
+
+export const logout = async (refreshToken) => {
+    const decoded = verifyRefreshToken(refreshToken);
+    const auth = await authRepo.findById(decoded.userId);
+    if (!auth) {
+        throw new AppError('User not found', 404, 'AUTH_NOT_FOUND');
+    }
+
+    const hashedIncoming = authRepo.hashedToken(refreshToken)
+    const storedToken = await authRepo.findTokenbyHash(hashedIncoming)
+
+    if(!storedToken){
+        throw new AppError('Refresh token not found', 404, 'REFRESH_TOKEN_NOT_FOUND');
+    }
+
+    if(storedToken.isRevoked) {
+        await authRepo.revokeAllUserTokens(storedToken.user);
+        throw new AppError('Refresh token revoked', 401, 'REFRESH_TOKEN_REVOKED');
+    }
+
+    await authRepo.revokeTokenByHash(hashedIncoming);
+}

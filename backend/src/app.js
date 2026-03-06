@@ -11,7 +11,10 @@ import authRoutes from './modules/auth/routes/auth.route.js';
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true,
+}));
 app.use(requestContext);
 app.use(morgan("combined", {stream: {write: (message) => logger.info(message.trim())}}));
 app.use(helmet());

@@ -32,3 +32,10 @@ export const findTokenbyHash = (hash) => RefreshToken.findOne({tokenHash: hash})
 export const revokeAllUserTokens = async (userId) => {
   await RefreshToken.updateMany({ user: userId, isRevoked: false }, { isRevoked: true, revokedAt: new Date() });
 }
+
+export const revokeTokenByHash = async (tokenHash) => {
+    await RefreshToken.findOneAndUpdate(
+        { tokenHash },
+        { isRevoked: true, revokedAt: new Date() }
+    );
+};

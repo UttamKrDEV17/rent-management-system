@@ -9,6 +9,6 @@ router.post('/register/owner',validateRequest(ownerRegistrationSchema), authCont
 router.post('/register/tenant', authController.tenantRegister);
 router.post('/login', validateRequest(loginSchema), authController.login);
 router.post('/refresh-token', authController.tokenAccessRefresh);
-
+router.post('/logout', authController.logout);
 
 export default router;

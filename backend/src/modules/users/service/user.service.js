@@ -9,4 +9,8 @@ export const createProfile = async (profileData, session) => {
     return user;
 }
 
+export const findUserByAuthId = (authId) => userRepo.findUserByAuthId(authId);
+
+export const findUserById = (id) => userRepo.findUserById(id);
+
 export const findUserByPhone = (phone) => userRepo.findUserByPhone(phone);

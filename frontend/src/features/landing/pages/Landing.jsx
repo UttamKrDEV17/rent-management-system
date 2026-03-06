@@ -6,11 +6,9 @@ import GetStarted from './GetStarted'
 const Landing = () => {
   return (
     <div>
-        <div className='max-w-7xl mx-auto px-4'>
         <Hero />
         <DualValue />
         <GetStarted />
-      </div>
     </div>
   )
 }

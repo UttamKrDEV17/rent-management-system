@@ -41,17 +41,32 @@ export const login = asyncHandler(async(req, res) => {
         success: true,
         message: 'Login successful',
         data: {
-            accessToken: data.accessToken
+            id: data.id,
+            email: data.email,
+            name: data.name,
+            phone: data.phone,
+            role: data.role,
+            accessToken: data.accessToken,
         },
     });
 })
 
 export const logout = asyncHandler(async(req, res) => {
+    const refreshToken = req.cookies?.refreshToken;
+    if(refreshToken) {
+        await authService.logout(refreshToken);
+    }
     res.clearCookie("refreshToken", REFRESH_TOKEN_COOKIE_OPTIONS);
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: 'Logout successful',
+        data: null,
+    });
 })
 
 export const tokenAccessRefresh = asyncHandler(async(req, res) => {
-    const refreshToken = req.cookies.refreshToken;
+    const refreshToken = req.cookies?.refreshToken;
     const data = await authService.tokenAccessRefresh(refreshToken, req.headers['user-agent'], req.ip);
     res.cookie("refreshToken", data.refreshToken, REFRESH_TOKEN_COOKIE_OPTIONS);
     sendResponse(res, {
@@ -59,6 +74,11 @@ export const tokenAccessRefresh = asyncHandler(async(req, res) => {
         success: true,
         message: 'Token refreshed',
         data: {
+            id: data.id,
+            name: data.name,
+            phone: data.phone,
+            email: data.email,
+            role: data.role,
             accessToken: data.accessToken,
         },
     });
